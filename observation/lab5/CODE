@@ -1,0 +1,103 @@
+class Account {
+    String cname;
+    int accno;
+    String acctype;
+    double balance;
+
+    // Constructor
+    Account(String cName, int accNo, String accType, double initialBalance) {
+        cname = cName;
+        accno = accNo;
+        acctype = accType;
+        balance = initialBalance;
+    }
+
+    // Method to deposit amount
+    void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: " + amount);
+        } else {
+            System.out.println("Invalid Deposit");
+        }
+    }
+
+    // Method to display balance
+    void displayBalance() {
+        System.out.println("Current Balance: " + balance);
+    }
+}
+
+class SavAcct extends Account {
+    final double ir = 0.05; // Interest rate
+
+    // Constructor for Savings Account
+    SavAcct(String cName, int accNo, double initialBalance) {
+        super(cName, accNo, "Savings", initialBalance);
+    }
+
+    // Method to add interest
+    void getInterest() {
+        double interest = balance * ir;
+        balance += interest;
+        System.out.println("Interest added: " + interest);
+    }
+
+    // Method to withdraw amount
+    void withdraw(double amount) {
+        if (amount > balance) {
+            System.out.println("Not enough balance");
+        } else {
+            balance -= amount;
+            System.out.println("Withdrawn: " + amount);
+        }
+    }
+}
+
+class CurAcct extends Account {
+    final double minBalance = 500.0; // Minimum balance for current account
+    final double serviceCharge = 50.0; // Service charge for low balance
+
+    // Constructor for Current Account
+    CurAcct(String cName, int accNo, double initialBalance) {
+        super(cName, accNo, "Current", initialBalance);
+    }
+
+    // Method to check minimum balance and apply service charge
+    void checkMinimumBalance() {
+        if (balance < minBalance) {
+            balance -= serviceCharge;
+            System.out.println("Service charge imposed: " + serviceCharge);
+        }
+    }
+
+    // Method to withdraw amount
+    void withdraw(double amount) {
+        if (amount > balance) {
+            System.out.println("Insufficient balance");
+        } else {
+            balance -= amount;
+            checkMinimumBalance();
+            System.out.println("Amount withdrawn: " + amount);
+        }
+    }
+}
+
+public class Bank {
+    public static void main(String args[]) {
+        // Creating instances of Savings and Current Accounts
+        SavAcct sa = new SavAcct("John", 101, 2000);
+        CurAcct ca = new CurAcct("Sejil", 102, 1000);
+
+        System.out.println("Savings account:");
+        sa.deposit(500);
+        sa.getInterest();
+        sa.withdraw(200);
+        sa.displayBalance();
+
+        System.out.println("\nCurrent account:");
+        ca.deposit(200);
+        ca.withdraw(800);
+        ca.displayBalance();
+    }
+}

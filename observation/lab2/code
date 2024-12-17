@@ -1,0 +1,104 @@
+import java.util.*;
+
+class Stud_details {
+    int marks[] = new int[8];
+    int credit[] = new int[8];
+    String usn, name;
+    Scanner sc = new Scanner(System.in);
+
+    // Method to get student details
+    void getdetails() {
+        System.out.println("Enter the usn and name");
+        usn = sc.next();
+        name = sc.next();
+
+        System.out.println("Enter the marks");
+        for (int i = 0; i < 8; i++) {
+            marks[i] = sc.nextInt();
+        }
+
+        System.out.println("Enter the credits");
+        for (int i = 0; i < 8; i++) {
+            credit[i] = sc.nextInt();
+        }
+    }
+
+    // Method to display student details
+    void display() {
+        System.out.println("USN: " + usn);
+        System.out.println("Name: " + name);
+
+        for (int i = 0; i < 8; i++) {
+            System.out.println("Marks of subject " + (i + 1) + ": " + marks[i]);
+        }
+
+        System.out.println("SGPA: " + calculateSGPA());
+    }
+
+    // Method to calculate grade points based on marks
+    double getgradepoint(int mark) {
+        if (mark >= 90) return 10.0;
+        else if (mark >= 80) return 9.0;
+        else if (mark >= 70) return 8.0;
+        else if (mark >= 60) return 7.0;
+        else if (mark >= 50) return 6.0;
+        else if (mark >= 40) return 5.0;
+        else return 0.0;
+    }
+
+    // Method to calculate SGPA
+    double calculateSGPA() {
+        int totalCredits = 0;
+        double gradePoints = 0;
+
+        // Calculate total credits
+        for (int i = 0; i < 8; i++) {
+            totalCredits += credit[i];
+        }
+
+        // Calculate grade points
+        for (int i = 0; i < 8; i++) {
+            gradePoints += getgradepoint(marks[i]) * credit[i];
+        }
+
+        // Calculate SGPA
+        return (gradePoints / totalCredits);
+    }
+}
+
+class Student {
+    public static void main(String args[]) {
+        // Create an array of 3 Stud_details objects
+        Stud_details s1[] = new Stud_details[3];
+
+        // Initialize the array of student objects
+        for (int j = 0; j < 3; j++) {
+            s1[j] = new Stud_details();
+        }
+
+        // Input details for each student
+        for (int j = 0; j < 3; j++) {
+            System.out.println("Enter details of student " + (j + 1));
+            s1[j].getdetails();
+        }
+
+        // Display details of each student
+        for (int j = 0; j < 3; j++) {
+            s1[j].display();
+        }
+
+        // Print a final line with a name and USN
+        System.out.println("\nAryan Kolur Gowda 1BM23CS054");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
